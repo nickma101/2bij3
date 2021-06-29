@@ -1,6 +1,9 @@
 # Virtual Environment
 venv/
 
+# Amcat example data
+add_new_amacatdata/
+
 #Database
 app.db
 /migrations
