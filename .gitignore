@@ -2,7 +2,7 @@
 venv/
 
 # Amcat example data
-add_new_amcatdata
+add_new_amcatdata1.py
 
 #Database
 app.db
