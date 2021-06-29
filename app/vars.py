@@ -14,8 +14,8 @@ classifier_dict is the dictionary that has the results of a prediction with the 
 '''
 topicfield = "section"
 textfield = "text"
-teaserfield = "teaser"
-teaseralt = "title"
+teaserfield = ""
+teaseralt = ""
 doctypefield = "publisher"
 titlefield = "title"
 '''

@@ -169,11 +169,11 @@ def newspage(show_again = 'False'):
             text_clean = text_clean.split(' ', 1)[1]
         elif re.match('[A-Z]*? - ', text_clean):
             text_clean = re.sub('[A-Z]*? - ', '', text_clean)
-        try:
-            teaser = result["_source"][teaserfield]
-        except KeyError:
-            teaser = result["_source"][textfield]
-        teaser = re.sub('[A-Z]*? - ', '', teaser)
+#        try:
+#            teaser = result["_source"][teaserfield]
+#        except KeyError:
+#            teaser = result["_source"][textfield]
+        teaser = "" #re.sub('[A-Z]*? - ', '', teaser)
         result["_source"]["teaser"] = teaser
         result["_source"]["text_clean"] = text_clean
         if topics == True:
