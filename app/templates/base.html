@@ -1,7 +1,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-{% if title %}{{title}} - 3bij3{% else %} Welkom op 3bij3{% endif %}
+{% if title %}{{title}} - 3bij3{% else %} Welkom op 2bij3{% endif %}
 {% endblock %}
 
 {% block styles %}
@@ -163,7 +163,7 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
     <nav id="sidebar">
       {% endif %}
       <div class="sidebar-header">
-         <a href="{{ url_for('count_logins') }}"><img src="/static/logo_3bij3.png" style="width: 80%; height: 80%"></a>
+         <a href="{{ url_for('count_logins') }}"><img src="/static/logo_2bij3.png" style="width: 80%; height: 80%"></a>
       </div>
       <ul class="list-unstyled components">
 	<li><a href="{{ url_for('count_logins') }}"><i class = "fa fa-newspaper"></i>   Nieuws</a></li>
@@ -171,7 +171,7 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
 	<li><a href="{{ url_for('contact') }}"><i class="fa fa-envelope"></i>   Mail ons</a></li>
 	<li><a href="{{ url_for('faq') }}"><i class="fa fa-question-circle"></i>   FAQ</a></li>
 <!--	<li><a href="{{ url_for('invite') }}"><i class="fa fa-share-square"></i>   Uitnodiging</a></li>-->
-         {% if current_user.is_anonymous %}
+         {% if current_user.is_anonymobus %}
          <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in-alt"></i>   Login</a></li>
          {% else %}
     <li><a  href="{{url_for('logout') }}"><i class="fa fa-sign-out-alt"></i>   Logout</a></li>
