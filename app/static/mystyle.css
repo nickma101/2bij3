@@ -89,7 +89,7 @@ label {
 
 .btn-xlarge {
     padding: 30px 35px;
-    font-size: 22px; //change this to your desired size
+    font-size: 22px; /*change this to your desired size*/
     line-height: normal;
     -webkit-border-radius: 8px;
        -moz-border-radius: 8px;
@@ -126,9 +126,9 @@ label {
 .square {
     float:left;
     position: relative;
-    width: 32%;
+    width: 45%; /*change width of content blocks here*/
     padding-bottom : 15%;
-    margin:0.5%;
+    margin:1%;
     background-color:#e6f2ff;
     overflow:hidden;
 }
@@ -136,7 +136,7 @@ label {
 .square-mobile {
     float: left;
     position: relative;
-    width: 100%;
+    width: 40%;
     padding-bottom: 90%;
     margin: 0.5%;
     background-color: #e6f2ff;
@@ -232,6 +232,7 @@ label {
 .articleLink,
 .articleLink:hover{
     color: black; 
+    font-size: 25px; /*change headline size here*/
     text-decoration: none;
 }
 
@@ -522,6 +523,19 @@ a[data-toggle="collapse"] {
     text-align:center;
 }
 .Wetenschap {
+    background-color: #347C98;
+    position: relative;
+    padding-top: 2px;
+    width: 45%;
+    height : 35%;
+    overflow:hidden;
+    margin:auto;
+    font-weight: bold;
+    text-align:center;
+    color:white;
+}
+
+.Politiek {
     background-color: #347C98;
     position: relative;
     padding-top: 2px;
