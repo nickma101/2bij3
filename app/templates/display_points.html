@@ -403,22 +403,6 @@ window.onclick = function(event) {
         </h2>
       </div>
       <div class="card-body">
-	<h4 class="font-weight-bold">Logins<span class="float-right">Max:{{ max_logins }} </span></h4>
-	{% if max_logins == 0 %}
-      </br>
-      <h5><b> Helaas heeft niemand hier tot nu toe punten verzameld - wees de eerste! </b></h5>
-      </br>
-      {% else %}
-      {% if points_logins == max_logins %}
-      <div class="progress mb-4">
-	<div class="progress-bar bg-danger" role="progressbar" style = "width: 100%;"></div>
-      </div>
-      {% else %}
-      <div class="progress mb-4">
-	<div class="progress-bar bg-danger" role="progressbar" aria-valuenow= {{ points_logins }} aria-valuemin= {{ min_logins }} aria-valuemax= {{ max_logins }} style={{"width:number%; color:black;"| replace("number", (points_logins/(max_logins - min_logins))*100) }}></div>
-      </div>
-      {% endif %}
-      {% endif %}
       <h4 class="font-weight-bold">Gelezen Artikelen<span class="float-right">Max:{{ max_stories }} </span></h4>
       {% if max_stories == 0 %}
       </br>

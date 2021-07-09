@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, make_response, session, Markup
 from app import app, db, mail, recommender
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, News, News_sel, Category, Points_logins, Points_stories, Points_invites, Points_ratings, User_invite, Num_recommended, Show_again, Diversity
+from app.models import User, News, News_sel, Category, Points_logins, Points_stories, Points_ratings, User_invite, Num_recommended, Show_again, Diversity
 from werkzeug.urls import url_parse
 from app.forms import RegistrationForm, ChecklisteForm, LoginForm, ReportForm,  ResetPasswordRequestForm, ResetPasswordForm, rating, ContactForm
 import string
@@ -492,12 +492,12 @@ def points_overview():
         user = User.query.filter_by(id = current_user.id).first()
         group = current_user.group
         phase_completed = current_user.phase_completed
-        try:
-            points_logins = user.sum_logins
-            if points_logins is None:
-                points_logins = 0
-        except:
-            points_logins = 0
+        #try:
+        #    points_logins = user.sum_logins
+        #    if points_logins is None:
+        #        points_logins = 0
+        #except:
+        #    points_logins = 0
         try:
             points_stories = user.sum_stories
             if points_stories is None:
@@ -510,37 +510,37 @@ def points_overview():
                 points_ratings = 0
         except:
             points_ratings = 0
-        user_host = current_user.id
-        user_invite_host = User_invite.query.filter_by(user_host = user_host).all()
-        if user_invite_host is None:
-            points_invites = 0
-        else:
-            number_invited = []
-            for item in user_invite_host:
-                item1 = item.__dict__
-                if item1["stories_read"] >= 5 and item1["times_logged_in"] >= 2:
-                    number_invited.append(item1['id'])
-                    invites_points = Points_invites.query.filter_by(user_guest_new = item1['user_guest']).first()
-                    if invites_points is None:
-                         points_invites = Points_invites(user_guest_new = item1['user_guest'], points_invites = 5, user_id = current_user.id)
-                         db.session.add(points_invites)
-                         db.session.commit()
-                    else:
-                        points_invites = 0
-                else:
-                    points_invites = 0
+        #user_host = current_user.id
+        #user_invite_host = User_invite.query.filter_by(user_host = user_host).all()
+        #if user_invite_host is None:
+        #    points_invites = 0
+        #else:
+        #    number_invited = []
+        #    for item in user_invite_host:
+        #        item1 = item.__dict__
+        #        if item1["stories_read"] >= 5 and item1["times_logged_in"] >= 2:
+        #            number_invited.append(item1['id'])
+        #            invites_points = Points_invites.query.filter_by(user_guest_new = item1['user_guest']).first()
+        #            if invites_points is None:
+        #                 points_invites = Points_invites(user_guest_new = item1['user_guest'], points_invites = 5, user_id = current_user.id)
+        #                 db.session.add(points_invites)
+        #                 db.session.commit()
+        #            else:
+        #                points_invites = 0
+        #        else:
+        #            points_invites = 0
         try:
             points_invites = user.sum_invites
             if points_invites is None:
                 points_invites = 0
         except:
             points_invites = 0
-        points = points_stories + points_invites + points_ratings + points_logins
+        points = points_stories + points_ratings
         if group == 4:
             points_min = p1_points_min
         else:
             points_min = p2_points_min
-        rest = points_min - (points_logins + points_stories + points_ratings)
+        rest = points_min - (points_stories + points_ratings)
         if rest <= 0:
             rest = 0
     else:
@@ -553,7 +553,8 @@ def points_overview():
         phase_completed = 0
         rest = 0
     
-    return dict(points = points, points_ratings = points_ratings, points_stories = points_stories, points_invites = points_invites, points_logins = points_logins, group = group, phase = phase_completed, rest = rest)
+    return dict(points = points, points_ratings = points_ratings, points_stories = points_stories, group = group, phase = phase_completed, rest = rest)
+#09/07 deleted this: points_invites = points_invites, points_logins = points_logins,
 
 @app.context_processor
 def user_agent():
@@ -628,10 +629,10 @@ def faq():
 @login_required
 def get_points():
     points_stories_all = [item[0] for item in User.query.with_entities(User.sum_stories).all()]
-    points_invites_all = [item[0] for item in User.query.with_entities(User.sum_invites).all()]
+    #points_invites_all = [item[0] for item in User.query.with_entities(User.sum_invites).all()]
     points_ratings_all = [item[0] for item in User.query.with_entities(User.sum_ratings).all()]
-    points_logins_all = [item[0] for item in  User.query.with_entities(User.sum_logins).all()]
-    points_list = [points_stories_all, points_invites_all, points_ratings_all, points_logins_all]
+    #points_logins_all = [item[0] for item in  User.query.with_entities(User.sum_logins).all()]
+    points_list = [points_stories_all, points_ratings_all]
     if points_stories_all is None:
         points_stories_all = [0]
     else:
@@ -639,13 +640,13 @@ def get_points():
     max_stories = max(points_stories_all)
     min_stories = min(points_stories_all)
     avg_stories  = round((sum(points_stories_all)/len(points_stories_all)),1)
-    if points_invites_all is None:
-        points_invites_all = [0]
-    else:
-        points_invites_all = [0 if x==None else x for x in points_invites_all]
-    max_invites = max(points_invites_all)
-    min_invites = min(points_invites_all)
-    avg_invites  = round((sum(points_invites_all)/len(points_invites_all)), 1)
+    #if points_invites_all is None:
+    #    points_invites_all = [0]
+    #else:
+    #    points_invites_all = [0 if x==None else x for x in points_invites_all]
+    #max_invites = max(points_invites_all)
+    #min_invites = min(points_invites_all)
+    #avg_invites  = round((sum(points_invites_all)/len(points_invites_all)), 1)
     if points_ratings_all is None:
         points_ratings_all = [0]
     else:
@@ -654,15 +655,15 @@ def get_points():
     max_ratings = max(points_ratings_all)
     min_ratings = min(points_ratings_all)
     avg_ratings  = round((sum(points_ratings_all)/len(points_ratings_all)), 1)
-    if points_logins_all is None:
-        points_logins_all = [0]
-    else:
-        points_logins_all = [0 if x==None else x for x in points_logins_all]
-    max_logins = max(points_logins_all)
-    min_logins = min(points_logins_all)
-    avg_logins  = round((sum(points_logins_all)/len(points_logins_all)),1)
+    #if points_logins_all is None:
+    #    points_logins_all = [0]
+    #else:
+    #    points_logins_all = [0 if x==None else x for x in points_logins_all]
+    #max_logins = max(points_logins_all)
+    #min_logins = min(points_logins_all)
+    #avg_logins  = round((sum(points_logins_all)/len(points_logins_all)),1)
 
-    points_overall = [sum(item) for item in zip(points_stories_all, points_logins_all, points_ratings_all, points_invites_all)]
+    points_overall = [sum(item) for item in zip(points_stories_all, points_ratings_all)]
     max_overall = max(points_overall)
     min_overall = min(points_overall)
     avg_overall  = round((sum(points_overall)/len(points_overall)), 2)
@@ -683,7 +684,7 @@ def get_points():
         diversity = Diversity.query.filter_by(user_id = current_user.id).order_by(desc(Diversity.id)).first().real
     except:
         diversity = 1
-    return render_template("display_points.html",points_min = points_min,  max_stories = max_stories, min_stories = min_stories, avg_stories = avg_stories, max_logins = max_logins, min_logins = min_logins, avg_logins = avg_logins, max_ratings = max_ratings, min_ratings = min_ratings, avg_ratings = avg_ratings, max_invites = max_invites, min_invites = min_invites, avg_invites = avg_invites, points_overall = points_overall, max_overall = max_overall, min_overall = min_overall, avg_overall = avg_overall, phase = phase, num_recommended = num_recommended, diversity = diversity, rest = rest)
+    return render_template("display_points.html",points_min = points_min,  max_stories = max_stories, min_stories = min_stories, avg_stories = avg_stories, max_ratings = max_ratings, min_ratings = min_ratings, avg_ratings = avg_ratings, points_overall = points_overall, max_overall = max_overall, min_overall = min_overall, avg_overall = avg_overall, phase = phase, num_recommended = num_recommended, diversity = diversity, rest = rest)
 
 
 @app.route('/invite', methods = ['GET', 'POST'])
