@@ -380,14 +380,14 @@ def show_detail(id):
              pass
          else:
              selected.rating = request.form['rating']
-         if request.form['rating2'] == '':
-             pass
-         else:
-             selected.rating2 = request.form['rating2']
+         #if request.form['rating2'] == '':
+         #    pass
+         #else:
+         #    selected.rating2 = request.form['rating2']
          db.session.commit()
          points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
          if points_ratings is None:
-             ratings = Points_ratings(points_ratings = 0.5, user_id = current_user.id)
+             ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
              db.session.add(ratings)
          else:
              dates = [item.timestamp.date() for item in points_ratings]
@@ -404,7 +404,7 @@ def show_detail(id):
                  ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
                  db.session.add(ratings)
              else:
-                 ratings = Points_ratings(points_ratings = 0.5, user_id = current_user.id)
+                 ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
                  db.session.add(ratings)
          db.session.commit()
          return redirect(url_for('decision'))
