@@ -10,6 +10,9 @@ from app.vars import host, indexName, es, list_of_sources
 from app.vars import num_less, num_more, num_select, num_recommender
 from app.vars import topicfield, textfield, teaserfield, teaseralt, titlefield
 from app.vars import doctypefield, classifier_dict, all_categories
+import pandas as pd
+import json
+import random
 
 class recommender():
 
@@ -38,14 +41,56 @@ class recommender():
                 docs.append(d)
         return docs
 
+    def negative_articles(self):
+        all_articles = es.search(index="test", size=100)["hits"]["hits"]
+        article_list = []
+        for article in all_articles:
+            article_list.append(article["_source"])
+        negative_articles = [article for article in article_list if article['negativity'] >0]
+        neutral_articles = [article for article in article_list if article['negativity'] == 0]
+        neutral_cluster_ids = []
+        for article in neutral_articles:
+            neutral_cluster_ids.append(article["cluster_id"])
+        useful_neg = [article for article in negative_articles if article['cluster_id'] in neutral_cluster_ids]
+				
+        intense_articles = [article for article in article_list if article['intensity'] >0]
+        boring_articles = [article for article in article_list if article['intensity'] == 0]
+        boring_cluster_ids = []
+        for article in boring_articles:
+            boring_cluster_ids.append(article["cluster_id"])
+        useful_int = [article for article in intense_articles if article['cluster_id'] in boring_cluster_ids]
+		
+        control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0]
+		
+        recommendations = []
+        #control articles from different clusters
+        random_article1 = random.choice(control_articles)
+        control_articles_new = [article for article in control_articles if article['cluster_id'] != random_article1["cluster_id"]]
+        recommendations.append(random.choice(control_articles_new))
+        recommendations.append(random_article1)
+        #negative and neutral articles from the same cluster
+        neg_article1 = random.choice(useful_neg)
+        pairs_negativity = [article for article in neutral_articles if article['cluster_id'] == neg_article1["cluster_id"]]
+        neg_article2 = random.choice(pairs_negativity)
+        recommendations.append(neg_article1)
+        recommendations.append(neg_article2)
+        #intense and not intense articles from the same cluster
+        int_article1 = random.choice(useful_int)
+        pairs_intensity = [article for article in boring_articles if article['cluster_id'] == int_article1["cluster_id"]]
+        int_article2 = random.choice(pairs_intensity)
+        recommendations.append(int_article1)
+        recommendations.append(int_article2)
+
+        return recommendations
+
     def recent_articles(self, by_field = "META.ADDED", num = None):
         body = dict(size=100,
                     sort=[{"date": {"order": "desc"}}],
 		)
-        docs = es.search(index="inca", body=body)['hits']['hits']
+        docs = es.search(index="test", body=body)['hits']['hits']
         #To select a single topic here: docs = es.search(index="inca", body={"query": {"match": {"section":"Politiek"}}})['hits']['hits']
         return docs
-
+		    
     def doctype_last(self, doctype, by_field = "META.ADDED", num = None):
         if num == None:
             num = self.num_less

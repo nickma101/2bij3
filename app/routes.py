@@ -160,25 +160,25 @@ def newspage(show_again = 'False'):
         if documents == "not enough stories":
             return render_template('no_stories_error.html')
     for idx, result in enumerate(documents):
-        news_displayed = News(elasticsearch = result["_id"], url = result["_source"]["url"], user_id = current_user.id, recommended = result['recommended'], position = idx)
+        news_displayed = News(elasticsearch = result["id"], url = result["url"], user_id = current_user.id, recommended =1, position = idx)        
         db.session.add(news_displayed)
         db.session.commit()
         result["new_id"] = news_displayed.id
-        text_clean = re.sub(r'\|','', result["_source"][titlefield])
+        text_clean = re.sub(r'\|','', result[titlefield])
         if text_clean.startswith(('artikel ', 'live ')):
             text_clean = text_clean.split(' ', 1)[1]
         elif re.match('[A-Z]*? - ', text_clean):
             text_clean = re.sub('[A-Z]*? - ', '', text_clean)
-#        try:
-#            teaser = result["_source"][teaserfield]
-#        except KeyError:
-#            teaser = result["_source"][textfield]
+        try:
+            teaser = result["_source"][teaserfield]
+        except KeyError:
+            teaser = result[textfield]
         teaser = "" #re.sub('[A-Z]*? - ', '', teaser)
-        result["_source"]["teaser"] = teaser
-        result["_source"]["text_clean"] = text_clean
+        result["teaser"] = teaser
+        result["text_clean"] = text_clean
         if topics == True:
-            if topicfield in result['_source'].keys():
-                result["_source"]["topic_string"] = result['_source'][topicfield]
+            if topicfield in result.keys():
+                result["topic_string"] = result[topicfield]
                 results.append(result)
         else:
             pass
@@ -210,9 +210,14 @@ def newspage(show_again = 'False'):
         flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.')) 
     return render_template('newspage.html', results = results)
 
+@app.route('/test', methods = ['GET', 'POST'])
+def test():
+    documents = which_recommender()
+    return documents[0]
+
 def which_recommender():
 	group = current_user.group
-	method = rec.random_selection()
+	method = rec.negative_articles()
 	return(method)
     
 #    group = current_user.group
