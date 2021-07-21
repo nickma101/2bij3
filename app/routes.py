@@ -210,11 +210,6 @@ def newspage(show_again = 'False'):
         flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.')) 
     return render_template('newspage.html', results = results)
 
-@app.route('/test', methods = ['GET', 'POST'])
-def test():
-    documents = which_recommender()
-    return documents[0]
-
 def which_recommender():
 	group = current_user.group
 	method = rec.negative_articles()
@@ -341,7 +336,7 @@ def save_selected(id):
 def show_detail(id):
      selected = News_sel.query.filter_by(id = id).first()
      es_id = selected.news_id
-     doc = es.search(index=indexName,
+     doc = es.search(index="test",
                   body={"query":{"term":{"_id":es_id}}}).get('hits',{}).get('hits',[""])
      for item in doc:
          text = item['_source'][textfield]
