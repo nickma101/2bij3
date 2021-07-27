@@ -3,8 +3,7 @@
 
 <div class="square-mobile">
 	  {% with result = results[0] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
-	      {% endwith %}
+		{% endwith %}
     <div class="content">
         <div class="table">
             <div class="table-cell">
@@ -17,7 +16,6 @@
 </div>
 	<div class="square-mobile">
 	  	  {% with result = results[1] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
 	      {% endwith %}
     <div class="content">
         <div class="table">
@@ -31,11 +29,10 @@
 </div>
 	<div class="square-mobile">
 	  	  {% with result = results[2] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
 	      {% endwith %}
     <div class="content">
         <div class="table">
-            <div class="table-cell">               
+            <div class="table-cell">
               {% with result = results[2] %}
 	      {% include '_result.html'%}
 	      {% endwith %}
@@ -46,7 +43,6 @@
 
 	<div class="square-mobile">
 	  	  {% with result = results[3] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
 	      {% endwith %}
    <div class="content">
         <div class="table">
@@ -60,7 +56,6 @@
 </div>
 	<div class="square-mobile">
 	  	  {% with result = results[4] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
 	      {% endwith %}
     <div class="content">
         <div class="table">
@@ -74,7 +69,6 @@
 </div>
 	<div class="square-mobile">
 	  	  {% with result = results[5] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
 	      {% endwith %}
    <div class="content">
         <div class="table">
@@ -86,47 +80,3 @@
         </div>
     </div>
 </div>
-
-
-	<div class="square-mobile">
-	  	  {% with result = results[6] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
-	      {% endwith %}
-   <div class="content">
-        <div class="table">
-            <div class="table-cell">
-              {% with result = results[6] %}
-	      {% include '_result.html'%}
-	      {% endwith %}
-            </div>
-        </div>
-    </div>
-</div>
-	<div class="square-mobile">
-	  	  {% with result = results[7] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
-	      {% endwith %}
-    <div class="content">
-        <div class="table">
-            <div class="table-cell">
-              {% with result = results[7] %}
-	      {% include '_result.html'%}
-	      {% endwith %}
-            </div>
-        </div>
-    </div>
-</div>
-	<div class="square-mobile">
-	  	  {% with result = results[8] %}
-	  <div class ={{result._source.topic_string}} >{{result._source.topic_string}}</div>
-	      {% endwith %}
-    <div class="content">
-        <div class="table">
-            <div class="table-cell">
-              {% with result = results[8] %}
-	      {% include '_result.html'%}
-	      {% endwith %}
-            </div>
-        </div>
-    </div>
-	</div>

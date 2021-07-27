@@ -82,14 +82,15 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('count_logins'))
     parameter = request.args.to_dict()
-    try: 
+    try:
         panel_id = parameter['id']
     except:
         panel_id = "noIDyet"
     form = RegistrationForm()
     if form.validate_on_submit():
-        group_list = list(range(1, group_number + 1))
-        group = random.choices(population = group_list, weights = [0.2, 0.3, 0.3, 0.2], k = 1)[0]
+        #group_list = list(range(1, group_number + 1))
+        #group = random.choices(population = group_list, weights = [0.2, 0.3, 0.3, 0.2], k = 1)[0]
+        group = 1
         user = User(username=form.username.data, group = group, panel_id = panel_id, email_contact = form.email.data)
         user.set_password(form.password.data)
         user.set_email(form.email.data)
@@ -104,7 +105,7 @@ def register():
             user_invite = User_invite(stories_read = 0, times_logged_in = 0, user_host = other_user, user_guest = form.username.data)
             db.session.add(user_invite)
             db.session.commit()
-        send_registration_confirmation(user, form.email.data)    
+        send_registration_confirmation(user, form.email.data)
         flash('Gefeliciteerd, je bent nu een ingeschreven gebruiker!')
         return redirect(url_for('login', panel_id = panel_id))
     return render_template('register.html', title = 'Registratie', form=form)
@@ -135,8 +136,8 @@ def activate():
     else:
         flash('Er ging iets mis. Heb je al een account aangemaakt op de website?')
         return redirect(url_for('login'))
-            
-        
+
+
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/homepage', methods = ['GET', 'POST'])
@@ -160,7 +161,7 @@ def newspage(show_again = 'False'):
         if documents == "not enough stories":
             return render_template('no_stories_error.html')
     for idx, result in enumerate(documents):
-        news_displayed = News(elasticsearch = result["id"], url = result["url"], user_id = current_user.id, recommended =1, position = idx)        
+        news_displayed = News(elasticsearch = result["id"], url = result["url"], user_id = current_user.id, recommended =1, position = idx)
         db.session.add(news_displayed)
         db.session.commit()
         result["new_id"] = news_displayed.id
@@ -197,7 +198,7 @@ def newspage(show_again = 'False'):
     href_first = "https://vuamsterdam.eu.qualtrics.com/jfe/form/SV_b7XIK4EZPElGJN3?id={}&group={}".format(current_user.panel_id, current_user.group)
     message_first = 'Je kunt nu de eerste deel van deze studie afsluiten door een aantal vragen te beantwoorden. Klik <a href={} class="alert-link">hier</a> om naar de vragenlijst te gaan. aan het einde van de vragenlijst vindt je een link die je terugbrengt naar de website voor het tweede deel. Om de studie succesvol af te ronden, moet je aan beide delen deelnemen.'.format(href_first)
     message_final_b = 'Je kunt deze studie nu afsluiten en een finale vragenlijst invullen - klik <a href={} class="alert-link">hier</a> - maar je kunt de webapp ook nog wel verder gebruiken.'.format(href_first)
-    
+
     if different_days >= p2_day_min and points >= p2_points_min and (group == 1 or group == 2 or group == 3) and current_user.phase_completed == 2:
         flash(Markup(message_final))
     elif current_user.phase_completed == 2 and (group == 2 or group == 3):
@@ -207,14 +208,14 @@ def newspage(show_again = 'False'):
     elif different_days >= p1_day_min and points >= p1_points_min and group == 4 and current_user.phase_completed == 1:
         flash(Markup(message_final_b))
     elif current_user.phase_completed == 3:
-        flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.')) 
+        flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.'))
     return render_template('newspage.html', results = results)
 
 def which_recommender():
 	group = current_user.group
 	method = rec.negative_articles()
 	return(method)
-    
+
 #    group = current_user.group
  #   if group == 1:
   #      method = rec.random_selection()
@@ -407,7 +408,7 @@ def show_detail(id):
                  ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
                  db.session.add(ratings)
          db.session.commit()
-         return redirect(url_for('decision'))
+         return redirect(url_for('newspage')) #add to include decision window where participants can see the original articles
 
      session['start_time'] = datetime.utcnow()
 
@@ -552,7 +553,7 @@ def points_overview():
         group = 1
         phase_completed = 0
         rest = 0
-    
+
     return dict(points = points, points_ratings = points_ratings, points_stories = points_stories, group = group, phase = phase_completed, rest = rest)
 #09/07 deleted this: points_invites = points_invites, points_logins = points_logins,
 
@@ -717,7 +718,7 @@ def completed_phase():
     try:
         wave_completed =int(parameter['phase_completed'])
         user_id = parameter['id']
-        try: 
+        try:
             fake = int(parameter['fake'])
         except:
             fake = 0

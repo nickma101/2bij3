@@ -48,11 +48,11 @@ num_less = 20
 num_more = 200
 num_select = 6
 num_recommender = 1
-group_number = 4
+group_number = 1
 
 '''
 REQUIREMENTS FOR FINISHING STUDY
-p1_day_min: How many days need participants to use the application in phase 1 
+p1_day_min: How many days need participants to use the application in phase 1
 p1_points_min: How many points do they need to collect in phase 1
 p2_day_min: How many days need participants to use the application in phase 1 and 2
 p2_points_min: How many points do they need to collect in phase 1 and 2

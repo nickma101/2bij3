@@ -77,14 +77,14 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
 		      for (var i = 0; i < spans.length; i++) {
  spans[i].onclick = function() {
     for (var index in modals) {
-      if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";    
+      if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
     }
  }
 }
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
      for (var index in modals) {
-      if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";    
+      if (typeof modals[index].style !== 'undefined') modals[index].style.display = "none";
      }
     }
 }
@@ -504,7 +504,6 @@ window.onclick = function(event) {
 	</div>
 	<div class="mt-4 pb-4 text-center small" style="font-size:12px;">
 	  <span class="mr-2">
-	    <i class="fas fa-circle text-danger"></i> Logins
 	  </span>
 	  <span class="mr-2">
 	    <i class="fas fa-circle text-warning"></i> Gelezen
