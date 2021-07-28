@@ -2,7 +2,7 @@
 	    href="{{url_for('.static', filename='mystyle.css')}}"></head>
 
 
-{% if (result.title|length > 100) %}
+{% if (result.title|length > 1000000) %}
 {% set title_list = result._source.title.split('.') %}
 {% set title_list = title_list[0].split('!') %}
 {% set title_list = title_list[0].split('?') %}

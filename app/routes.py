@@ -177,12 +177,13 @@ def newspage(show_again = 'False'):
         teaser = "" #re.sub('[A-Z]*? - ', '', teaser)
         result["teaser"] = teaser
         result["text_clean"] = text_clean
-        if topics == True:
-            if topicfield in result.keys():
-                result["topic_string"] = result[topicfield]
-                results.append(result)
-        else:
-            pass
+        #print(topics, topicfield, topicfield in result.keys(), result.get(topicfield))
+        #if topics == True:
+        #    if topicfield in result.keys():
+        #        result["topic_string"] = result[topicfield]
+        results.append(result)
+        #else:
+        #    pass
     session['start_time'] = datetime.utcnow()
 
     user_guest = current_user.username
