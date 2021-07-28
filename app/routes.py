@@ -359,7 +359,7 @@ def show_detail(id):
          url = item['_source']['url']
          #Add the "[:-6]" to adapt the date format
          publication_date = item['_source']['date']
-         publication_date = datetime.strptime(publication_date, '%Y-%m-%dT%H:%M:%S')
+         publication_date = datetime.strptime(publication_date, '%Y-%m-%d')
          try:
              for image in item['_source']['images']:
                  image_url = image['url']
