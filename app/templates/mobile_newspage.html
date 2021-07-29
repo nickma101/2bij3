@@ -1,111 +1,82 @@
 <head><link rel="stylesheet"
 	    href="{{url_for('.static', filename='mystyle.css')}}"></head>
 
-			<div class="container">
-			  <div class="row">
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[0] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[0] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[1] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[1] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			  </div>
+<div class="square-mobile">
+	  {% with result = results[0] %}
+		{% endwith %}
+    <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[0] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+	<div class="square-mobile">
+	  	  {% with result = results[1] %}
+	      {% endwith %}
+    <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[1] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+	<div class="square-mobile">
+	  	  {% with result = results[2] %}
+	      {% endwith %}
+    <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[2] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
 
-			  <div class="row">
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[2] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[2] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[3] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[3] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			  </div>
-
-			  <div class="row">
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[4] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[4] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			    <div class="col">
-			      <div class="square">
-				        {% with result = results[5] %}
-				            {% endwith %}
-			          <div class="content">
-			              <div class="table">
-			                  <div class="table-cell">
-			                    {% with result = results[5] %}
-				            {% include '_result.html'%}
-				            {% endwith %}
-			                  </div>
-			              </div>
-			          </div>
-			      </div>
-			    </div>
-			  </div>
-
-			    <body>
-			     <div class="container">
-			        <div class="row">
-			        </div>
-			     </div>
-			    </body>
-
-			</div>
+	<div class="square-mobile">
+	  	  {% with result = results[3] %}
+	      {% endwith %}
+   <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[3] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+	<div class="square-mobile">
+	  	  {% with result = results[4] %}
+	      {% endwith %}
+    <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[4] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+	<div class="square-mobile">
+	  	  {% with result = results[5] %}
+	      {% endwith %}
+   <div class="content">
+        <div class="table">
+            <div class="table-cell">
+              {% with result = results[5] %}
+	      {% include '_result.html'%}
+	      {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
