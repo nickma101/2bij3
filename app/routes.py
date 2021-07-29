@@ -327,7 +327,7 @@ def save_selected(id):
                 points_today += 1
             else:
                 pass
-        if points_today >= 10:
+        if points_today >= 2:
             stories = Points_stories(points_stories = 0, user_id = current_user.id)
             db.session.add(stories)
         else:
@@ -405,7 +405,7 @@ def show_detail(id):
                      points_today += value
                  else:
                      pass
-             if points_today >= 5:
+             if points_today >= 2:
                  ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
                  db.session.add(ratings)
              else:
