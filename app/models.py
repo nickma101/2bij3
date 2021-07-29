@@ -41,7 +41,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
     def set_email(self, email):
         self.email_hash = generate_password_hash(email)
-    
+
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp':time() + expires_in},
@@ -54,7 +54,7 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
-    
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -74,7 +74,7 @@ class User(UserMixin, db.Model):
     def sum_stories(self):
         return db.func.sum(Points_stories.points_stories)
     stories_sum = db.relationship('Points_stories')
-    
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key =True)
     topic1 = db.Column(db.Integer)
@@ -91,14 +91,16 @@ class Category(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class News(db.Model):
-    id = db.Column(db.Integer, primary_key = True) 
+    id = db.Column(db.Integer, primary_key = True)
     elasticsearch = db.Column(db.String(500))
     recommended = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     url = db.Column(db.String(500))
     position = db.Column(db.Integer)
-    
+    negativity = db.Column(db.Integer)
+    intensity =db.Column(db.Integer)
+
 class News_sel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     news_id = db.Column(db.String(500))
@@ -108,6 +110,8 @@ class News_sel(db.Model):
     rating = db.Column(db.Numeric(2,1), default = 0)
     rating2 = db.Column(db.Numeric(2,1), default = 0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    negativity = db.Column(db.Integer)
+    intensity =db.Column(db.Integer)
 class User_invite(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
@@ -150,7 +154,7 @@ class Show_again(db.Model):
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     show_again = db.Column(db.Integer, default = 99)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
+
 Similarities = db.Table('similarities',
                         db.Column('sim_id', db.Integer, primary_key = True),
                         db.Column('id_old', db.Integer, db.ForeignKey('news_sel.id')),
@@ -164,15 +168,14 @@ class Num_recommended(db.Model):
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     real = db.Column(db.Integer, default=num_recommender)
-    
+
 class Diversity(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     diversity = db.Column(db.Integer, default=1)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     real = db.Column(db.Integer, default=num_recommender)
-    
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-

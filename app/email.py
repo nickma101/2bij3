@@ -32,4 +32,3 @@ def send_registration_confirmation(user, email):
 def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
-        

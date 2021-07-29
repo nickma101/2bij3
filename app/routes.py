@@ -35,6 +35,9 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Ongeldige gebruikersnaam of wachtwoord')
             return redirect(url_for('login'))
+        elif user.activated != 1:
+            flash('Je moet jouw account nog steeds  activeren, controleer hiervoor jouw email (ook jouw ongewenste e-mails of spam)')
+            return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         try:
             user.panel_id(panel_id)
@@ -161,7 +164,7 @@ def newspage(show_again = 'False'):
         if documents == "not enough stories":
             return render_template('no_stories_error.html')
     for idx, result in enumerate(documents):
-        news_displayed = News(elasticsearch = result["id"], url = result["url"], user_id = current_user.id, recommended =1, position = idx)
+        news_displayed = News(elasticsearch = result["id"], url = result["url"], negativity = result["negativity"], intensity = result["intensity"], user_id = current_user.id, recommended =1, position = idx)
         db.session.add(news_displayed)
         db.session.commit()
         result["new_id"] = news_displayed.id
