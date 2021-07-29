@@ -31,7 +31,7 @@ try:
     lda_model = gensim.models.LdaModel.load("put path to model here")
 except:
     lda_model = None
-try:    
+try:
     lda_dict = gensim.corpora.Dictionary.load("/put path to dict here")
 except:
     lda_dict = None
@@ -60,7 +60,7 @@ if not app.debug:
         mail_handler = SMTPHandler(
             mailhost = (app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
             fromaddr = 'no-reply@' + app.config['MAIL_SERVER'],
-            toaddrs = app.config['ADMINS'], subject= '3bij3 Failure',
+            toaddrs = app.config['ADMINS'], subject= '32ij3 Failure',
             credentials=auth, secure=secure)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
@@ -73,5 +73,5 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
     app.logger.info('3bij3 startup')
-    
+
 from app import routes, models, errors, processing, recommender
