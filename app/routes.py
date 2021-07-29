@@ -615,7 +615,7 @@ def contact():
                 email = 'no_address_given'
             msg = Message("Message from your visitor " + name + "with ID: " + id,
                           sender= email,
-                          recipients= ['felicia.loecherbach@gmail.com'])
+                          recipients= ['2bij3news@gmail.com'])
             msg.body = """
             From: %s <%s>,
             %s
