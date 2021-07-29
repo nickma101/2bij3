@@ -12,7 +12,7 @@ def send_email(subject, sender, recipients, text_body, html_body):
 
 def send_password_reset_email(user, email):
     token = user.get_reset_password_token()
-    send_email('(3bij3) Wachtwoord opnieuw instellen',
+    send_email('(2bij3) Wachtwoord opnieuw instellen',
                sender=app.config['ADMINS'][0],
                recipients=[email],
                text_body=render_template('email/reset_password.txt',
@@ -22,7 +22,7 @@ def send_password_reset_email(user, email):
 
 
 def send_registration_confirmation(user, email):
-    send_email('3bij3 registratie voltooid - activeer jouw account',
+    send_email('2bij3 registratie voltooid - activeer jouw account',
                sender=app.config['ADMINS'][0],
                recipients=[email],
                text_body = render_template('email/registration_confirmation.txt',
