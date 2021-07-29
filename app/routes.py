@@ -114,7 +114,6 @@ def register():
     return render_template('register.html', title = 'Registratie', form=form)
 
 
-
 @app.route('/activate', methods=['GET', 'POST'])
 def activate():
     parameter = request.args.to_dict()
@@ -130,7 +129,7 @@ def activate():
             redirect_link = "".format(check_user.panel_id)
             flash('Gefeliciteerd, je account is nu geactiveerd!')
             try:
-                return webbrower.open_new_tab(redirect_link)
+                return webbrowser.open_new_tab(redirect_link)
             except:
                 return redirect(redirect_link)
         elif check_user.activated == 1:
@@ -515,25 +514,25 @@ def points_overview():
                 points_ratings = 0
         except:
             points_ratings = 0
-        #user_host = current_user.id
-        #user_invite_host = User_invite.query.filter_by(user_host = user_host).all()
-        #if user_invite_host is None:
-        #    points_invites = 0
-        #else:
-        #    number_invited = []
-        #    for item in user_invite_host:
-        #        item1 = item.__dict__
-        #        if item1["stories_read"] >= 5 and item1["times_logged_in"] >= 2:
-        #            number_invited.append(item1['id'])
-        #            invites_points = Points_invites.query.filter_by(user_guest_new = item1['user_guest']).first()
-        #            if invites_points is None:
-        #                 points_invites = Points_invites(user_guest_new = item1['user_guest'], points_invites = 5, user_id = current_user.id)
-        #                 db.session.add(points_invites)
-        #                 db.session.commit()
-        #            else:
-        #                points_invites = 0
-        #        else:
-        #            points_invites = 0
+        user_host = current_user.id
+        user_invite_host = User_invite.query.filter_by(user_host = user_host).all()
+        if user_invite_host is None:
+            points_invites = 0
+        else:
+            number_invited = []
+            for item in user_invite_host:
+                item1 = item.__dict__
+                if item1["stories_read"] >= 5 and item1["times_logged_in"] >= 2:
+                    number_invited.append(item1['id'])
+                    invites_points = Points_invites.query.filter_by(user_guest_new = item1['user_guest']).first()
+                    if invites_points is None:
+                         points_invites = Points_invites(user_guest_new = item1['user_guest'], points_invites = 5, user_id = current_user.id)
+                         db.session.add(points_invites)
+                         db.session.commit()
+                    else:
+                        points_invites = 0
+                else:
+                    points_invites = 0
         try:
             points_invites = user.sum_invites
             if points_invites is None:
