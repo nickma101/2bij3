@@ -10,9 +10,9 @@ class Config(object):
     'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
-    MAIL_PORT = 465
+    MAIL_PORT = os.environ.get('MAIL_PORT')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
+#    MAIL_USE_SSL = True
     ADMINS = os.environ.get('ADMINS', 'admin@example.com')
