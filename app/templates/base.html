@@ -1,7 +1,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-{% if title %}{{title}} - 3bij3{% else %} Welkom op 2bij3{% endif %}
+{% if title %}{{title}} - 2bij3{% else %} Welkom op 2bij3{% endif %}
 {% endblock %}
 
 {% block styles %}
@@ -10,7 +10,7 @@
       href="{{url_for('.static', filename='mystyle.css')}}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
   <link rel="stylesheet" href="{{url_for('.static', filename='addtohomescreen.css')}}">
-       
+
 {% endblock %}
 
 {% block scripts %}
@@ -93,7 +93,7 @@
                 });
             });
 	</script>
-	
+
 {% endif %}
 
 <script>
@@ -109,7 +109,7 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
 </script>
 <script>
        jQuery(function($) {
-  
+
   $('#bookmark-this').click(function(e) {
     var bookmarkURL = window.location.href;
     var bookmarkTitle = document.title;
@@ -138,7 +138,7 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
 
     return false;
   });
-  
+
 				  });
 </script>
 
@@ -181,7 +181,7 @@ checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
 </ul>
    </nav>
    {% endif %}
-   
+
    {% endblock %}
     {% block content %}
    {% if device == "mobile" %}
