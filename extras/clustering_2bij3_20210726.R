@@ -34,6 +34,8 @@ dfm_amcat_weighted = dfm_tfidf(dfm_amcat, scheme_tf = "prop")
 amcat_simil = textstat_simil(dfm_amcat_weighted, margin='documents', method = 'cosine')
 df_amcat_simil = as.data.frame(as.matrix(amcat_simil))
 df_amcat_simil[df_amcat_simil<0.4]=0
+df_amcat_simil_test = df_amcat_simil
+
 
 ## Create a dataframe of similar texts for each title, to get the required output format.
 df_clustered = as.data.frame(matrix(nrow = length(df_amcat_simil$text1), ncol = 1))
@@ -45,7 +47,7 @@ for(i in 1:length(df_clustered$similar_texts)){
   for(j in 1:length(df_clustered$similar_texts)){
     if(is.na(df_amcat_simil[i, j])) {
       next
-    } else if(df_amcat_simil[i,j] >= 0.4 & df_amcat_simil[i,j] < 1){
+    } else if(df_amcat_simil[i,j] >= 0.4 & df_amcat_simil[i,j] <1){
       simil_list = append(simil_list, colnames(df_amcat_simil)[j])
     } else {
       next
