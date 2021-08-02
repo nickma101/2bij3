@@ -9,7 +9,7 @@ library(stringr)
 
 ## First, set the date for article retrieval. For automation purposes, this is set to 
 ## find the system date. It can be manually set to any date in "yyyy-mm-dd" format.
-scrape_date = Sys.Date()
+scrape_date = Sys.Date()-1
 
 ## Connect to amcat using personal credentials.
 conn = amcat.connect("https://vu.amcat.nl")
@@ -36,6 +36,15 @@ df_amcat_simil = as.data.frame(as.matrix(amcat_simil))
 df_amcat_simil[df_amcat_simil<0.4]=0
 df_amcat_simil_test = df_amcat_simil
 
+
+secondmax = c()
+for(i in 1:nrow(df_amcat_simil_test)) {
+  x <- df_amcat_simil_test[i,]
+  secondmax = append(secondmax, max(x[x != max(x)]))
+}
+
+df_amcat_simil$secondmax <- c(secondmax)
+df_amcat_simil[df_amcat_simil<df_amcat_simil$secondmax]=0
 
 ## Create a dataframe of similar texts for each title, to get the required output format.
 df_clustered = as.data.frame(matrix(nrow = length(df_amcat_simil$text1), ncol = 1))
