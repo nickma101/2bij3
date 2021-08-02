@@ -20,7 +20,7 @@
         </p>
 	<p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
 	<p>{{ form.submit() }}</p>
-	<p>Nieuw gebruiker?  <a href ={{ "https://vuamsterdam.eu.qualtrics.com/jfe/form/SV_2bBVt1FD2pcXA2O" | replace("panel_id", panel_id) }}>Hier registreren!</a></p>
+	<p>Nieuwe gebruiker?  <a href ={{ "https://vuamsterdam.eu.qualtrics.com/jfe/form/SV_2bBVt1FD2pcXA2O" | replace("panel_id", panel_id) }}>Hier registreren!</a></p>
 	<p>Wachtwoord vergeten? <a href = "{{ url_for('reset_password_request') }}">Hier opnieuw instellen!</a>
     </form>
 {% endblock %}

@@ -139,8 +139,6 @@ def activate():
         flash('Er ging iets mis. Heb je al een account aangemaakt op de website?')
         return redirect(url_for('login'))
 
-
-
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/homepage', methods = ['GET', 'POST'])
 @login_required
@@ -641,7 +639,7 @@ def get_points():
         points_stories_all = [0]
     else:
         points_stories_all = [0 if x==None else x for x in points_stories_all]
-    max_stories = max(points_stories_all)
+    max_stories = 7
     min_stories = min(points_stories_all)
     avg_stories  = round((sum(points_stories_all)/len(points_stories_all)),1)
     #if points_invites_all is None:
@@ -656,7 +654,7 @@ def get_points():
     else:
         points_ratings_all = [0 if x==None else x for x in points_ratings_all]
     points_ratings_all = [float(i) for i in points_ratings_all]
-    max_ratings = max(points_ratings_all)
+    max_ratings = 7
     min_ratings = min(points_ratings_all)
     avg_ratings  = round((sum(points_ratings_all)/len(points_ratings_all)), 1)
     #if points_logins_all is None:
@@ -668,7 +666,7 @@ def get_points():
     #avg_logins  = round((sum(points_logins_all)/len(points_logins_all)),1)
 
     points_overall = [sum(item) for item in zip(points_stories_all, points_ratings_all)]
-    max_overall = max(points_overall)
+    max_overall = 14
     min_overall = min(points_overall)
     avg_overall  = round((sum(points_overall)/len(points_overall)), 2)
     group = current_user.group
