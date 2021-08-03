@@ -17,4 +17,3 @@ for article in articles:
     es.index(index=index, doc_type="article",
              id = article["id"],
              body=article)
-    

@@ -57,9 +57,9 @@ p1_points_min: How many points do they need to collect in phase 1
 p2_day_min: How many days need participants to use the application in phase 1 and 2
 p2_points_min: How many points do they need to collect in phase 1 and 2
 '''
-p1_day_min = 7
+p1_day_min = 2
 p1_points_min = 14
-p2_day_min = 7
+p2_day_min = 2
 p2_points_min = 14
 '''
 TOPICS
