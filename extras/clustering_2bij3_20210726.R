@@ -142,4 +142,15 @@ df_output = df_output %>%
 ## Write the final dataframe to a json file for use in 2bij3
 j_2bij3 = toJSON(df_output, auto_unbox = T)
 # cat(j_2bij3)
-write(j_2bij3, file = "clustered_for_3bij2.json")
+#write(j_2bij3, file = "clustered_for_3bij2.json")
+#write(j_2bij3, file = "clustered_for_3bij2_.json")
+
+#filename = paste(gsub(":", "-", Sys.time()),"_file.json",sep="")
+# [1] "2016-12-29 00-49-08_file.txt"
+# to write the content to a .txt file with the above filename
+#write.table("your content", file = paste0("D:/", filename))
+
+
+filename = paste(scrape_date,"_clustered_for_3bij2.json",sep="")
+filename = gsub(":","-",filename)
+write(j_2bij3, file = filename)
