@@ -16,4 +16,4 @@ for article in articles:
     print(repr(article["title"]))
     es.index(index=index, doc_type="article",
              id = article["id"],
-             body=article)
+             body=article, timeout="60s")
