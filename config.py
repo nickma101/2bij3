@@ -11,8 +11,9 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
-    MAIL_USERNAME = '2bij3news@gmail.com'
-    MAIL_PASSWORD = 'MacMattis'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     ADMINS = os.environ.get('ADMINS', 'admin@example.com')
+    print("Configured with email username ", MAIL_USERNAME, ", password ", bool(MAIL_PASSWORD))
