@@ -204,8 +204,8 @@ def newspage(show_again = 'False'):
         flash(Markup('Er zijn nu nieuwe functies om 3bij3 naar jouw wensen te personaliseren. Klik <a href="/points" class="alert-link">hier</a> of ga naar "Mijn 3bij3" en probeer ze uit!'))
     elif p1_day_min <= different_days and p1_points_min <= points and current_user.phase_completed == 1 and (group == 1 or group == 2 or group == 3):
         flash(Markup(message_first))
-    elif different_days >= p1_day_min and points >= p1_points_min and group == 4 and current_user.phase_completed == 1:
-        flash(Markup(message_final_b))
+    #elif different_days >= p1_day_min and points >= p1_points_min and group == 4 and current_user.phase_completed == 1:
+    #    flash(Markup(message_final_b))
     elif current_user.phase_completed == 3:
         flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.'))
     return render_template('newspage.html', results = results)
@@ -305,7 +305,7 @@ def count_logins():
 def save_selected(id):
     selected = News.query.filter_by(id = id).first()
     es_id = selected.elasticsearch
-    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, )
+    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, negativity = selected.negativity, intensity = selected.intensity)
     db.session.add(news_selected)
     db.session.commit()
     selected_id = News_sel.query.filter_by(user_id = current_user.id).order_by(desc(News_sel.id)).first().__dict__['id']
