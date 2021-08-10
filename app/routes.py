@@ -122,17 +122,13 @@ def activate():
     except:
         user = "no_user"
     check_user = User.query.filter_by(id = user).first()
-    check_user = int(check_user == 'true')
     if check_user is not None:
         if check_user.activated == 0:
             check_user.activated = 1
             db.session.commit()
             redirect_link = "".format(check_user.panel_id)
             flash('Gefeliciteerd, je account is nu geactiveerd!')
-            try:
-                return webbrowser.open_new_tab(redirect_link)
-            except:
-                return render_template('login.html', title='Inloggen', form=form)
+                return redirect(redirect_link)
         elif check_user.activated == 1:
             flash('Je account is al geactiveerd, veel plezier op de website!')
             return redirect(url_for('login'))
