@@ -122,6 +122,7 @@ def activate():
     except:
         user = "no_user"
     check_user = User.query.filter_by(id = user).first()
+    check_user = int(check_user == 'true')
     if check_user is not None:
         if check_user.activated == 0:
             check_user.activated = 1
