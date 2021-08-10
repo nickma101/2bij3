@@ -126,7 +126,7 @@ def activate():
         if check_user.activated == 0:
             check_user.activated = 1
             db.session.commit()
-            redirect_link = ".format(check_user.panel_id)
+            redirect_link = "".format(check_user.panel_id)
             flash('Gefeliciteerd, je account is nu geactiveerd!')
             try:
                 return webbrowser.open_new_tab(redirect_link)
