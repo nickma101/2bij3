@@ -131,7 +131,7 @@ def activate():
             try:
                 return webbrowser.open_new_tab(redirect_link)
             except:
-                return redirect(redirect_link)
+                return redirect(url_for('login'))
         elif check_user.activated == 1:
             flash('Je account is al geactiveerd, veel plezier op de website!')
             return redirect(url_for('login'))
