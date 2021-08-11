@@ -423,7 +423,7 @@ def show_detail(id):
              if points_today >= 1:
                  ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
                  db.session.add(ratings)
-            else:
+             else:
                  ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
                  db.session.add(ratings)
          db.session.commit()
