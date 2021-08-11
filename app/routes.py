@@ -305,7 +305,7 @@ def count_logins():
 def save_selected(id):
     selected = News.query.filter_by(id = id).first()
     es_id = selected.elasticsearch
-    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, negativity = selected.negativity, intensity = selected.intensity)
+    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, negativity = negativity, intensity = intensity)
     db.session.add(news_selected)
     db.session.commit()
     selected_id = News_sel.query.filter_by(user_id = current_user.id).order_by(desc(News_sel.id)).first().__dict__['id']
@@ -387,8 +387,8 @@ def show_detail(id):
          db.session.commit()
          points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
          if points_ratings is None:
-             stories = points_ratings(points_ratings = 1, user_id = current_user.id)
-             db.session.add(stories)
+             ratings = points_ratings(points_ratings = 1, user_id = current_user.id)
+             db.session.add(ratings)
          else:
              dates = [item.timestamp.date() for item in points_ratings]
              now = datetime.utcnow().date()
@@ -399,11 +399,11 @@ def show_detail(id):
                  else:
                      pass
                      if points_today >= 1:
-                         stories = Points_ratings(points_ratings = 0, user_id = current_user.id)
-                         db.session.add(stories)
+                         ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
+                         db.session.add(ratings)
                      else:
-                         stories = Points_ratings(points_ratings = 1, user_id = current_user.id)
-                         db.session.add(stories)
+                         ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
+                         db.session.add(ratings)
              db.session.commit()
 #         points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
 #         if points_ratings is None:
