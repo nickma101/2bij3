@@ -305,7 +305,7 @@ def count_logins():
 def save_selected(id):
     selected = News.query.filter_by(id = id).first()
     es_id = selected.elasticsearch
-    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, negativity = negativity, intensity = intensity)
+    news_selected = News_sel(news_id = selected.elasticsearch, user_id =current_user.id, negativity = selected.negativity, intensity = selected.intensity)
     db.session.add(news_selected)
     db.session.commit()
     selected_id = News_sel.query.filter_by(user_id = current_user.id).order_by(desc(News_sel.id)).first().__dict__['id']
