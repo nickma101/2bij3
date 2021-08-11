@@ -384,49 +384,49 @@ def show_detail(id):
          #    pass
          #else:
          #    selected.rating2 = request.form['rating2']
-         db.session.commit()
-         points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
-         if points_ratings is None:
-             ratings = points_ratings(points_ratings = 1, user_id = current_user.id)
-             db.session.add(ratings)
-         else:
-             dates = [item.timestamp.date() for item in points_ratings]
-             now = datetime.utcnow().date()
-             points_today = 0
-             for date in dates:
-                 if date == now:
-                     points_today += 1
-                 else:
-                     pass
-                     if points_today >= 1:
-                         ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
-                         db.session.add(ratings)
-                     else:
-                         ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
-                         db.session.add(ratings)
-             db.session.commit()
+#         db.session.commit()
 #         points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
 #         if points_ratings is None:
-#             ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
+#             ratings = points_ratings(points_ratings = 1, user_id = current_user.id)
 #             db.session.add(ratings)
 #         else:
 #             dates = [item.timestamp.date() for item in points_ratings]
-#             points = [item.points_ratings for item in points_ratings]
-#             points_dict = dict(zip(dates, points))
 #             now = datetime.utcnow().date()
 #             points_today = 0
-#             for key, value in points_dict.items():
-#                 if key == now:
-#                     points_today += value
+#             for date in dates:
+#                 if date == now:
+#                     points_today += 1
 #                 else:
 #                     pass
-#             if points_today >= 1:
-#                 ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
-#                 db.session.add(ratings)
-#             else:
-#                 ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
-#                 db.session.add(ratings)
-#         db.session.commit()
+#                     if points_today >= 1:
+#                         ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
+#                         db.session.add(ratings)
+#                     else:
+#                         ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
+#                         db.session.add(ratings)
+#             db.session.commit()
+         points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
+         if points_ratings is None:
+             ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
+             db.session.add(ratings)
+         else:
+             dates = [item.timestamp.date() for item in points_ratings]
+             points = [item.points_ratings for item in points_ratings]
+             points_dict = dict(zip(dates, points))
+             now = datetime.utcnow().date()
+             points_today = 0
+             for key, value in points_dict.items():
+                 if key == now:
+                     points_today += value
+                 else:
+                     pass
+             if points_today >= 1:
+                 ratings = Points_ratings(points_ratings = 0, user_id = current_user.id)
+                 db.session.add(ratings)
+            else:
+                 ratings = Points_ratings(points_ratings = 1, user_id = current_user.id)
+                 db.session.add(ratings)
+         db.session.commit()
          return redirect(url_for('newspage')) #add to include decision window where participants can see the original articles
 
      session['start_time'] = datetime.utcnow()
