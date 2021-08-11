@@ -417,7 +417,7 @@ def show_detail(id):
              points_today = 0
              for key, value in points_dict.items():
                  if key == now:
-                     points_today += value
+                     points_today = 1
                  else:
                      pass
              if points_today >= 1:

@@ -136,7 +136,7 @@ class Points_invites(db.Model):
 
 class Points_ratings(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    points_ratings = db.Column(db.Numeric(5,1), default = 0.0)
+    points_ratings = db.Column(db.Numeric(2,1), default = 0)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
