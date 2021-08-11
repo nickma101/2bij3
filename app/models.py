@@ -99,7 +99,7 @@ class News(db.Model):
     url = db.Column(db.String(500))
     position = db.Column(db.Integer)
     negativity = db.Column(db.Integer)
-    intensity =db.Column(db.Integer)
+    intensity = db.Column(db.Integer)
 
 class News_sel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -112,7 +112,7 @@ class News_sel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     negativity = db.Column(db.Integer)
     intensity =db.Column(db.Integer)
-    
+
 class User_invite(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
