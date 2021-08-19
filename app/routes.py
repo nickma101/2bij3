@@ -190,40 +190,30 @@ def newspage(show_again = 'False'):
         db.session.commit()
     different_days = days_logged_in()['different_dates']
     points = points_overview()['points']
+    points_stories_today = points_overview()['points_stories_today']
+    points_ratings_today = points_overview()['points_ratings_today']
     group = current_user.group
     #href_final = "https://vuamsterdam.eu.qualtrics.com/jfe/form/SV_38UP20nB0r7wv3f?id={}&group={}&fake={}".format(current_user.panel_id, current_user.group, current_user.fake)
     #message_final = 'Je kunt deze studie nu afsluiten en een finale vragenlijst invullen - klik <a href={} class="alert-link">hier</a> - maar je kunt de webapp ook nog wel verder gebruiken.'.format(href_final)
     #href_first = "https://vuamsterdam.eu.qualtrics.com/jfe/form/SV_b7XIK4EZPElGJN3?id={}&group={}".format(current_user.panel_id, current_user.group)
-    message_first = "Je heeft genoeg punten verzameld, maar als je wil kan je die app nog verder gebruiken."
+    message_first = "Je heeft genoeg punten verzameld, maar als je wil kan je die app nog verder gebruiken. we nemen contact met u op over de betaling"
     #message_first = 'Je kunt nu de eerste deel van deze studie afsluiten door een aantal vragen te beantwoorden. Klik <a href={} class="alert-link">hier</a> om naar de vragenlijst te gaan. aan het einde van de vragenlijst vindt je een link die je terugbrengt naar de website voor het tweede deel. Om de studie succesvol af te ronden, moet je aan beide delen deelnemen.'.format(href_first)
     #message_final_b = 'Je kunt deze studie nu afsluiten en een finale vragenlijst invullen - klik <a href={} class="alert-link">hier</a> - maar je kunt de webapp ook nog wel verder gebruiken.'.format(href_first)
-
-    now = datetime.utcnow().date()
-    points_stories = Points_stories.query.filter_by(user_id = current_user.id).all()
-    dates = [item.timestamp.date() for item in points_stories]
-    points_stories_today = 0
-    for date in dates:
-        if date == now:
-            points_stories_today += 1
-    points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
-    dates = [item.timestamp.date() for item in points_ratings]
-    points_ratings_today = 0
-    for date in dates:
-        if date == now:
-            points_ratings_today += 1
-    if points_stories_today==1 & points_ratings_today==1:
-        flash('Je hebt het maximaal antaal punten voor vandaag gehaald')
+    message_done_daily = "Je hebt het maximaal antaal punten voor vandaag gehaald. Log morgen weer in om je dagelijkse punten te halen. Vragen? Check het FAQ of mail ons."
 
     if different_days >= p2_day_min and points >= p2_points_min and (group == 1 or group == 2 or group == 3) and current_user.phase_completed == 2:
         flash(Markup(message_final))
-    elif current_user.phase_completed == 2 and (group == 2 or group == 3):
-        flash(Markup('Er zijn nu nieuwe functies om 3bij3 naar jouw wensen te personaliseren. Klik <a href="/points" class="alert-link">hier</a> of ga naar "Mijn 3bij3" en probeer ze uit!'))
-    elif p1_day_min <= different_days and p1_points_min <= points and current_user.phase_completed == 1 and (group == 1 or group == 2 or group == 3):
-        flash(Markup(message_first))
+    #elif current_user.phase_completed == 2 and (group == 2 or group == 3):
+    #    flash(Markup('Er zijn nu nieuwe functies om 3bij3 naar jouw wensen te personaliseren. Klik <a href="/points" class="alert-link">hier</a> of ga naar "Mijn 3bij3" en probeer ze uit!'))
+    #elif p1_day_min <= different_days and p1_points_min <= points and current_user.phase_completed == 1 and (group == 1 or group == 2 or group == 3):
+    #    flash(Markup(message_first))
     #elif different_days >= p1_day_min and points >= p1_points_min and group == 4 and current_user.phase_completed == 1:
     #    flash(Markup(message_final_b))
     elif current_user.phase_completed == 3:
         flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.'))
+    return render_template('newspage.html', results = results)
+    elif points_stories_today==1 & points_ratings_today==1:
+        flash(message_done_daily)
     return render_template('newspage.html', results = results)
 
 def which_recommender():
@@ -579,17 +569,32 @@ def points_overview():
         rest = points_min - (points_stories + points_ratings)
         if rest <= 0:
             rest = 0
+        now = datetime.utcnow().date()
+        points_stories_all = Points_stories.query.filter_by(user_id = current_user.id).all()
+        dates = [item.timestamp.date() for item in points_stories_all]
+        points_stories_today = 0
+        for date in dates:
+            if date == now:
+                points_stories_today += 1
+        points_ratings_all = Points_ratings.query.filter_by(user_id = current_user.id).all()
+        dates2 = [item.timestamp.date() for item in points_ratings_all]
+        points_ratings_today = 0
+        for date in dates2:
+            if date == now:
+                points_ratings_today += 1
     else:
         points_stories = 0
         points_invites = 0
         points_ratings = 0
         points_logins = 0
+        points_stories_today = 0
+        points_ratings_today = 0
         points = 0
         group = 1
         phase_completed = 0
         rest = 0
 
-    return dict(points = points, points_ratings = points_ratings, points_stories = points_stories, group = group, phase = phase_completed, rest = rest)
+    return dict(points = points, points_ratings = points_ratings, points_stories = points_stories, group = group, phase = phase_completed, rest = rest, points_stories_today = points_stories_today, points_ratings_today = points_ratings_today)
 #09/07 deleted this: points_invites = points_invites, points_logins = points_logins,
 
 @app.context_processor
