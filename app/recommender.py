@@ -74,6 +74,9 @@ class recommender():
             try:
                 control_articles_new = [article for article in control_articles if article['cluster_id'] == random_article1["cluster_id"]]
                 break # Only triggered if input is valid...
+            except ValueError:
+                print("No control articles from the same cluster")
+                #control_articles_new = [article for article in control_articles if article['cluster_id'] != random_article1["cluster_id"]]
         recommendations.append(random.choice(control_articles_new))
         recommendations.append(random_article1)
 
