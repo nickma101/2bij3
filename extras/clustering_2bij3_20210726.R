@@ -7,7 +7,7 @@ library(jsonlite)
 library(data.table)
 library(stringr)
 
-## First, set the date for article retrieval. For automation purposes, this is set to 
+## First, set the date for article retrieval. For automation purposes, this is set to
 ## find the system date. It can be manually set to any date in "yyyy-mm-dd" format.
 scrape_date = Sys.Date()-1
 
@@ -34,8 +34,6 @@ dfm_amcat_weighted = dfm_tfidf(dfm_amcat, scheme_tf = "prop")
 amcat_simil = textstat_simil(dfm_amcat_weighted, margin='documents', method = 'cosine')
 df_amcat_simil = as.data.frame(as.matrix(amcat_simil))
 df_amcat_simil[df_amcat_simil<0.4]=0
-df_amcat_simil_test = df_amcat_simil
-
 
 secondmax = c()
 for(i in 1:nrow(df_amcat_simil_test)) {
