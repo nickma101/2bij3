@@ -36,8 +36,8 @@ df_amcat_simil = as.data.frame(as.matrix(amcat_simil))
 df_amcat_simil[df_amcat_simil<0.4]=0
 
 secondmax = c()
-for(i in 1:nrow(df_amcat_simil_test)) {
-  x <- df_amcat_simil_test[i,]
+for(i in 1:nrow(df_amcat_simil)) {
+  x <- df_amcat_simil[i,]
   secondmax = append(secondmax, max(x[x != max(x)]))
 }
 
