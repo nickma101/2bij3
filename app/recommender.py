@@ -51,16 +51,12 @@ class recommender():
         #create lists for articles that are intense and that are not
         intense_articles = [article for article in article_list if article['intensity'] >0]
         boring_articles = [article for article in article_list if article['intensity'] == 0]
-        boring_cluster_ids = []
-        for article in boring_articles:
-            boring_cluster_ids.append(article["cluster_id"])
+        boring_cluster_ids = [article["cluster_id"] for article in boring_articles]
         useful_int = [article for article in intense_articles if article['cluster_id'] in boring_cluster_ids]
         #create lists for articles that are negative and articles that are not
         negative_articles = [article for article in article_list if article['negativity'] >0]
         neutral_articles = [article for article in article_list if article['negativity'] == 0]
-        neutral_cluster_ids = []
-        for article in neutral_articles:
-            neutral_cluster_ids.append(article["cluster_id"])
+        neutral_cluster_ids = [article["cluster_id"] for article in neutral_articles]
         useful_neg = [article for article in negative_articles if article['cluster_id'] in neutral_cluster_ids]
         #create a list of control articles that are neither intense nor negative
         control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0]
@@ -68,8 +64,13 @@ class recommender():
         #Now it's time to select recommendations from the lists above
         recommendations = []
         #control articles from different clusters
-        random_article1 = random.choice(control_articles)
-        control_articles_new = [article for article in control_articles if article['cluster_id'] != random_article1["cluster_id"]]
+        while True:
+            try:
+                random_article1 = random.choice(control_articles)
+                control_articles_new = [article for article in control_articles if article['cluster_id'] == random_article1["cluster_id"]]
+            except IndexError:
+                print("Problem!")
+            break
         recommendations.append(random.choice(control_articles_new))
         recommendations.append(random_article1)
 

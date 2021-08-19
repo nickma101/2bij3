@@ -205,7 +205,7 @@ def newspage(show_again = 'False'):
     for date in dates:
         if date == now:
             points_stories_today += 1
-    points_stories = Points_ratings.query.filter_by(user_id = current_user.id).all()
+    points_ratings = Points_ratings.query.filter_by(user_id = current_user.id).all()
     dates = [item.timestamp.date() for item in points_ratings]
     points_ratings_today = 0
     for date in dates:
