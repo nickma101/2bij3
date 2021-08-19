@@ -428,6 +428,7 @@ def show_detail(id):
                  db.session.add(ratings)
          db.session.commit()
          return redirect(url_for('newspage')) #add to include decision window where participants can see the original articles
+         flash('Je hebt het maximaal antaal punten voor vandaag gehaald')
 
      session['start_time'] = datetime.utcnow()
 

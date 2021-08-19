@@ -65,11 +65,15 @@ class recommender():
         #create a list of control articles that are neither intense nor negative
         control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0]
 
+
         #Now it's time to select recommendations from the lists above
         recommendations = []
         #control articles from different clusters
         random_article1 = random.choice(control_articles)
-        control_articles_new = [article for article in control_articles if article['cluster_id'] != random_article1["cluster_id"]]
+        while True:
+            try:
+                control_articles_new = [article for article in control_articles if article['cluster_id'] == random_article1["cluster_id"]]
+                break # Only triggered if input is valid...
         recommendations.append(random.choice(control_articles_new))
         recommendations.append(random_article1)
 
