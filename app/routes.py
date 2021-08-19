@@ -198,6 +198,22 @@ def newspage(show_again = 'False'):
     #message_first = 'Je kunt nu de eerste deel van deze studie afsluiten door een aantal vragen te beantwoorden. Klik <a href={} class="alert-link">hier</a> om naar de vragenlijst te gaan. aan het einde van de vragenlijst vindt je een link die je terugbrengt naar de website voor het tweede deel. Om de studie succesvol af te ronden, moet je aan beide delen deelnemen.'.format(href_first)
     #message_final_b = 'Je kunt deze studie nu afsluiten en een finale vragenlijst invullen - klik <a href={} class="alert-link">hier</a> - maar je kunt de webapp ook nog wel verder gebruiken.'.format(href_first)
 
+    now = datetime.utcnow().date()
+    points_stories = Points_stories.query.filter_by(user_id = current_user.id).all()
+    dates = [item.timestamp.date() for item in points_stories]
+    points_stories_today = 0
+    for date in dates:
+        if date == now:
+            points_stories_today += 1
+    points_stories = Points_ratings.query.filter_by(user_id = current_user.id).all()
+    dates = [item.timestamp.date() for item in points_ratings]
+    points_ratings_today = 0
+    for date in dates:
+        if date == now:
+            points_ratings_today += 1
+    if points_stories_today==1 & points_ratings_today==1:
+        flash('Je hebt het maximaal antaal punten voor vandaag gehaald')
+
     if different_days >= p2_day_min and points >= p2_points_min and (group == 1 or group == 2 or group == 3) and current_user.phase_completed == 2:
         flash(Markup(message_final))
     elif current_user.phase_completed == 2 and (group == 2 or group == 3):
@@ -428,7 +444,6 @@ def show_detail(id):
                  db.session.add(ratings)
          db.session.commit()
          return redirect(url_for('newspage')) #add to include decision window where participants can see the original articles
-         flash('Je hebt het maximaal antaal punten voor vandaag gehaald')
 
      session['start_time'] = datetime.utcnow()
 
