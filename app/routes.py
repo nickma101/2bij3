@@ -197,7 +197,7 @@ def newspage(show_again = 'False'):
     message_first = "Je heeft genoeg punten verzameld, maar als je wil kan je die app nog verder gebruiken. we nemen contact met u op over de betaling"
     #message_first = 'Je kunt nu de eerste deel van deze studie afsluiten door een aantal vragen te beantwoorden. Klik <a href={} class="alert-link">hier</a> om naar de vragenlijst te gaan. aan het einde van de vragenlijst vindt je een link die je terugbrengt naar de website voor het tweede deel. Om de studie succesvol af te ronden, moet je aan beide delen deelnemen.'.format(href_first)
     #message_final_b = 'Je kunt deze studie nu afsluiten en een finale vragenlijst invullen - klik <a href={} class="alert-link">hier</a> - maar je kunt de webapp ook nog wel verder gebruiken.'.format(href_first)
-    message_done_daily = "Je hebt het maximaal antaal punten voor vandaag gehaald. Log morgen weer in om je dagelijkse punten te halen. Vragen? Check het FAQ of mail ons."
+    message_done_daily = "Je hebt het maximaal antaal punten voor vandaag gehaald. Log morgen weer in om je dagelijkse punten te halen. Vragen? Bekijk de FAQ of mail ons."
     now = datetime.utcnow().date()
     points_stories_all = Points_stories.query.filter_by(user_id = current_user.id).all()
     dates = [item.timestamp.date() for item in points_stories_all]
