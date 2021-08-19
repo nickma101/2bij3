@@ -69,9 +69,9 @@ class recommender():
         #Now it's time to select recommendations from the lists above
         recommendations = []
         #control articles from different clusters
-        random_article1 = random.choice(control_articles)
         while True:
             try:
+                random_article1 = random.choice(control_articles)
                 control_articles_new = [article for article in control_articles if article['cluster_id'] == random_article1["cluster_id"]]
                 break # Only triggered if input is valid...
             except ValueError:
