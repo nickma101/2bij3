@@ -65,7 +65,6 @@ class recommender():
         #create a list of control articles that are neither intense nor negative
         control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0]
 
-
         #Now it's time to select recommendations from the lists above
         recommendations = []
         #control articles from different clusters
