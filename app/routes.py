@@ -224,6 +224,8 @@ def newspage(show_again = 'False'):
         flash(Markup('Bedankt voor het afronden van de studie. Je kunt nog steeds 3bij3 blijven gebruiken als je dat wilt.'))
     elif points_stories_today==1 and points_ratings_today==1:
         flash(Markup(message_done_daily))
+    #elif now == datetime.utcnow().date():
+    #    flash(Markup(message_done_daily))
     return render_template('newspage.html', results = results)
 
 def which_recommender():
