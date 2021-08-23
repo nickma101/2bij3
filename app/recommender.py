@@ -63,6 +63,7 @@ class recommender():
 
         #Now it's time to select recommendations from the lists above
         recommendations = []
+        control_articles_new = []
         #control articles from different clusters
         while True:
             try:
