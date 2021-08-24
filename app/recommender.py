@@ -48,47 +48,52 @@ class recommender():
         for article in all_articles:
             article_list.append(article["_source"])
 
-        #create lists for articles that are intense and that are not
-        intense_articles = [article for article in article_list if article['intensity'] >0]
+        recommendations = []
+
+        #create lists for articles that are intense and that are not (in the same cluster)
+        intense_articles = [article for article in article_list if article['intensity'] > 0]
         boring_articles = [article for article in article_list if article['intensity'] == 0]
         boring_cluster_ids = [article["cluster_id"] for article in boring_articles]
         useful_int = [article for article in intense_articles if article['cluster_id'] in boring_cluster_ids]
-        #create lists for articles that are negative and articles that are not
-        negative_articles = [article for article in article_list if article['negativity'] >0]
-        neutral_articles = [article for article in article_list if article['negativity'] == 0]
-        neutral_cluster_ids = [article["cluster_id"] for article in neutral_articles]
-        useful_neg = [article for article in negative_articles if article['cluster_id'] in neutral_cluster_ids]
-        #create a list of control articles that are neither intense nor negative
-        control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0]
-
-        #Now it's time to select recommendations from the lists above
-        recommendations = []
-        control_articles_new = []
-        #control articles from different clusters
-        while True:
-            try:
-                random_article1 = random.choice(control_articles)
-                control_articles_new = [article for article in control_articles if article['cluster_id'] == random_article1["cluster_id"]]
-            except IndexError:
-                print("Problem!")
-            break
-        recommendations.append(random.choice(control_articles_new))
-        recommendations.append(random_article1)
 
         #intense and not intense articles from the same cluster
         int_article1 = random.choice(useful_int)
         pairs_intensity = [article for article in boring_articles if article['cluster_id'] == int_article1["cluster_id"]]
         int_article2 = random.choice(pairs_intensity)
-        recommendations.append(int_article1)
-        recommendations.append(int_article2)
+
+        #create lists for articles that are negative and articles that are not (in the same cluster)
+        negative_articles = [article for article in article_list if article['negativity'] > 0]
+        neutral_articles = [article for article in article_list if article['negativity'] == 0]
+        neutral_cluster_ids = [article["cluster_id"] for article in neutral_articles]
+        useful_neg = [article for article in negative_articles if article['cluster_id'] in neutral_cluster_ids and article["cluster_id"] != int_article1 ["cluster_id"]]
 
         #negative and neutral articles from the same cluster
-        useful_neg_new = [article for article in useful_neg if article["cluster_id"] != int_article1 ["cluster_id"]]
-        neg_article1 = random.choice(useful_neg_new)
+        neg_article1 = random.choice(useful_neg)
         pairs_negativity = [article for article in neutral_articles if article['cluster_id'] == neg_article1["cluster_id"]]
         neg_article2 = random.choice(pairs_negativity)
+
+        #create list for control articles
+        neg_cluster = neg_article1['cluster_id']
+        int_cluster = int_article1['cluster_id']
+        control_articles = [article for article in article_list if article['negativity'] == 0 & article["intensity"] == 0 & article['cluster_id'] != int_cluster and article['cluster_id'] != neg_cluster]
+
+        #select 2 random control articles from the same cluster
+        control_articles_ids = [article['cluster_id'] for article in control_articles]
+        c = Counter(control_articles_ids)
+        control_articles_ids_useful = [id for id in control_articles_ids if c[id] >= 2]
+        control_articles_useful = [article for article in control_articles if article['cluster_id'] in control_articles_ids_useful]
+
+        con_article1 = random.choice(control_articles_useful)
+        options = [article for article in control_articles_useful if article['cluster_id'] == con_article1['cluster_id']]
+        con_article2 = random.choice([article for article in options if article['id'] != con_article1['id']])
+
+        #append recommendations
+        recommendations.append(int_article1)
+        recommendations.append(int_article2)
         recommendations.append(neg_article1)
         recommendations.append(neg_article2)
+        recommendations.append(con_article1)
+        recommendations.append(con_article2)
 
         #Randomise order_by shuffling the recommendations
         random.shuffle(recommendations)
