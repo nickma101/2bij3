@@ -22,6 +22,10 @@ print("Getting data from AmCAT project 2 set 1340")
 d_amcat = amcat.articles(conn, project=2, articleset=1340, columns=c("date", "title","publisher","url", "text"), filters=filters)
 # d_amcat_today = filter(d_amcat, date == scrape_date & sapply(strsplit(d_amcat$title, " "), length) > 2)
 d_amcat_today = d_amcat[!duplicated(d_amcat$title),]
+#filter out super short texts
+d_amcat_today = d_amcat_today[!nchar(d_amcat_today$text) < 100, ]
+#filter out titles that contain the string "NPO"
+d_amcat_today = dplyr::filter(d_amcat_today, !grepl('NPO', title))
 
 ## Create a corpus from the article titles, tokenize this and create a dfm weighted by tf-idf.
 c_amcat = corpus(d_amcat_today, text_field="text")
