@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-es = Elasticsearch('http://localhost:9200')
+es = Elasticsearch('http://localhost:9200', timeout=60, max_retries=10, retry_on_timeout=True)
 
 import json, sys
 
