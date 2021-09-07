@@ -1,6 +1,6 @@
 import csv
 from app import db
-from app.models import News_sel
+from app.models import News_sel, News
 
 def sql_query_to_csv(query_output, columns_to_exclude=""):
      rows = query_output
@@ -20,6 +20,9 @@ def sql_query_to_csv(query_output, columns_to_exclude=""):
      return csv
  
 query = News_sel.query.all()
+query2 = News.query.all()
 csv1 = sql_query_to_csv(query)
+csv2 = sql_query_to_csv(query2)
 
 print(csv1)
+#print(csv2)
