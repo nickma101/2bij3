@@ -26,4 +26,4 @@ csv1 = sql_query_to_csv(query)
 csv2 = sql_query_to_csv(query2)
 csv3 = sql_query_to_csv(query3)
 
-print(csv1)
+print(csv3)
